@@ -19,8 +19,8 @@
 
 ## 3. Custom Exception Hierarchy
 
-- [ ] NLA-014-create-exception-classes Create `services/exceptions.py` — define `NLQueryError`, `SQLValidationError`, `DBExecutionError`, `EmptyResultError`, `InsightError` as subclasses of `Exception` — [specs/error-handling/spec.md](specs/error-handling/spec.md)
-- [ ] NLA-015-test-exception-classes Write `tests/services/test_exceptions.py` — assert each exception is raiseable and is a subclass of `Exception` — [specs/error-handling/spec.md](specs/error-handling/spec.md)
+- [x] NLA-014-create-exception-classes Create `services/exceptions.py` — define `NLQueryError`, `SQLValidationError`, `DBExecutionError`, `EmptyResultError`, `InsightError` as subclasses of `Exception` — [specs/error-handling/spec.md](specs/error-handling/spec.md)
+- [x] NLA-015-test-exception-classes Write `tests/services/test_exceptions.py` — assert each exception is raiseable and is a subclass of `Exception` — [specs/error-handling/spec.md](specs/error-handling/spec.md)
 
 ## 4. NL-to-SQL Service
 
