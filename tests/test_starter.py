@@ -32,6 +32,7 @@ def mock_deps(monkeypatch):
     monkeypatch.setattr(starter, "setup_logging", MagicMock())
 
     mock_engine = MagicMock()
+    mock_engine.dialect.name = "sqlite"
     monkeypatch.setattr(starter, "get_engine", lambda c: mock_engine)
 
     mock_llm = MagicMock()
@@ -72,18 +73,25 @@ def test_query_history_initialized_empty(mock_deps):
     assert mock_deps["session"]["query_history"] == []
 
 
-def test_db_schema_is_non_empty_dict(mock_deps):
+def test_db_schema_has_required_keys(mock_deps):
     starter.bootstrap()
     schema = mock_deps["session"]["db_schema"]
     assert isinstance(schema, dict)
-    assert len(schema) > 0
+    assert "dialect" in schema
+    assert "tables" in schema
+
+
+def test_schema_has_dialect_key(mock_deps):
+    starter.bootstrap()
+    schema = mock_deps["session"]["db_schema"]
+    assert schema["dialect"] == "sqlite"
 
 
 def test_schema_contains_table_names(mock_deps):
     starter.bootstrap()
     schema = mock_deps["session"]["db_schema"]
-    assert "orders" in schema
-    assert "products" in schema
+    assert "orders" in schema["tables"]
+    assert "products" in schema["tables"]
 
 
 def test_guard_prevents_re_run(mock_deps, monkeypatch):
