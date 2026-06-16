@@ -26,12 +26,13 @@ def bootstrap() -> None:
     llm_client = LLMClient(config)
 
     inspector = inspect(engine)
-    db_schema: dict[str, list[dict]] = {}
+    db_tables: dict[str, list[dict]] = {}
     for table_name in inspector.get_table_names():
-        db_schema[table_name] = [
+        db_tables[table_name] = [
             {"name": col["name"], "type": str(col["type"])}
             for col in inspector.get_columns(table_name)
         ]
+    db_schema = {"dialect": engine.dialect.name, "tables": db_tables}
 
     st.session_state["db_engine"] = engine
     st.session_state["llm_client"] = llm_client
